@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR-USER/YOUR-REPO.git
+    repoURL: https://github.com/ytooyama/openshift-argocd-nginx-demo.git
     targetRevision: HEAD
     path: nginx
   destination:
