@@ -22,8 +22,22 @@ spec:
           command: ["/bin/bash", "-ec"]
           args:
             - |
-              echo 'Argo CD nginx CD test OK' > /opt/app-root/src/index.html
-              exec /usr/libexec/s2i/run
+              cat > /tmp/nginx.conf <<'EOF'
+              pid /tmp/nginx.pid;
+              error_log /dev/stderr;
+              events {}
+              http {
+                access_log /dev/stdout;
+                server {
+                  listen 8080;
+                  location / {
+                    default_type text/plain;
+                    return 200 "Argo CD nginx CD test OK\n";
+                  }
+                }
+              }
+              EOF
+              exec nginx -c /tmp/nginx.conf -g 'daemon off;'
           ports:
             - name: http
               containerPort: 8080
